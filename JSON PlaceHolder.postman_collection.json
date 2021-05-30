@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "d048c57e-4933-4e33-b5ed-c7a2eee950ea",
+		"name": "JSON PlaceHolder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get new placeholder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//considerando um retorno fixo de 100 registros:",
+							"",
+							"let jsonData = JSON.parse(responseBody);",
+							"var list = jsonData.length;",
+							"",
+							"pm.test(\"Get retornou os registros e o status code foi 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Cadastros não devem contar campos nulos\", () => {",
+							"    pm.expect(pm.response.to.have.jsonBody()).to.not.be.null;",
+							"})",
+							"",
+							"pm.test(\"Valor do campo id não deve ser maior que 100\", () => {",
+							"    pm.expect(list).is.not.above(100);",
+							"})",
+							"",
+							"pm.test(\"Valor do campo userID não deve ser maior que 10\", () =>{",
+							"    pm.expect(jsonData[99].userId).is.not.above(10);",
+							"});",
+							"",
+							"pm.test(\"Get deve retornar os campos userId, id, title e body\", () => {",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.expect(jsonData[0]).to.have.property('userId');",
+							"    pm.expect(jsonData[0]).to.have.property('id');",
+							"    pm.expect(jsonData[0]).to.have.property('title');",
+							"    pm.expect(jsonData[0]).to.have.property('body');",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new placeholder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Após o cadastro com sucesso deve retornar status code 201\"] = pm.expect(responseCode.code).to.not.be.oneOf([400, 401]);",
+							"// tests[\"Após tentar cadastrar sem os campos useris e id, não deve cadastrar.\"] = pm.expect(responseCode.code).to.not.be.oneOf([200,201]);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": 1 ,\n  \"id\": 1 ,\n  \"title\": \"juãozinho\",\n  \"body\": \"juaãozinho\"\n}\n/*\n{\n  \"userId\": ,\n  \"id\": ,\n  \"title\": \"juãozinho\",\n  \"body\": \"juaãozinho\"\n}*/",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
