@@ -1,0 +1,13 @@
+version: "3"
+services:
+  postman_collection:
+      # container_name: postman_docker_container
+      build: .
+      image: postman/newman
+      command:
+        run https://www.getpostman.com/collections/df66857f2e66f4bb0cf1
+        --folder "JSON PlaceHolder"
+        -r html,cli
+        --reporter-html-export reports/Main_Report.html
+      volumes:
+        - ./src:/etc/newman

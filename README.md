@@ -29,3 +29,6 @@
 1. Com a collection importada clicar em "..."
 2. Em seguida clicar em: Run Collection > Run JSON PlaceHolder
 3. Para visualizar os resultados clicar em: View Summary / Ver Resumo.
+
+Ou usando docker:
+1. docker run -t postman/newman run https://www.getpostman.com/collections/df66857f2e66f4bb0cf1
